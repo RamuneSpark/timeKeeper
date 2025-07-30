@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<body>
+    <div id="text"></div>
+    <div class="txt" id="navi"></div>
+
+    <div id="choice0" class="choice">
+
+        <div class="flex">・</div>
+        <div class="flex" id="opacity">
+            <select name="minute" id="m-select" class="choiceButton">
+                <option value="0">0</option>
+            </select>
+            分
+            <select name="second" id="s-select" class="choiceButton">
+                <option value="0">00</option>
+            </select>
+            秒で
+            <select name="times" id="times-select" class="choiceButton">
+                <option value="1">1</option>
+            </select>
+            回
+        </div>
+        <div class="flex">　</div>
+        <div class="flex" id="opacity2">
+            <select name="onOff" id="onOff-select" class="choiceButton2">
+                <option value="0">OFF</option>
+            </select>
+        </div>
+        <br>
+
+    </div>
+    <div id="copyRight">ベルの音：<a href="https://pocket-se.info/">ポケットサウンド/効果音素材</a></div>
+</body>
+<style>
+    .flex {
+        float: left;
+    }
+
+    .txt {
+        font-size: 20px;
+        /* ←←修正 テキスト内の表示文字サイズ */
+        color: #000000;
+
+        /* 行の高さ */
+    }
+
+    .choiceButton {
+        width: 60px;
+        /* ←←修正 横幅 */
+        height: 25px;
+        /* 高さ */
+        font-size: 20px;
+        /* ←←修正 テキスト内の表示文字サイズ */
+        color: #000000;
+
+        /* 行の高さ */
+    }
+
+    .choiceButton2 {
+        width: 260px;
+        /* ←←修正 横幅 */
+        height: 25px;
+        /* 高さ */
+        font-size: 20px;
+        /* ←←修正 テキスト内の表示文字サイズ */
+        color: #000000;
+
+        /* 行の高さ */
+    }
+</style>
+<script lang="ja">
+
+    const navi = document.getElementById("navi");
+
+    const boxNumber = 8;
+
+
+    let choice = [];
+    let choiceType = [];
+    choice[0] = document.getElementById("choice0");
+    choice[0].style.fontSize = "20px";
+
+    for (let i = 1; i < 60; i++) {
+
+        let op = document.createElement("option");
+        op.value = i;
+        op.innerHTML = i;
+        document.getElementById("m-select").appendChild(op);
+
+    }
+
+    let sSelect = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+
+    for (let i = 1; i < sSelect.length; i++) {
+
+        let op = document.createElement("option");
+        op.value = i;
+        op.innerHTML = d(sSelect[i]);
+        document.getElementById("s-select").appendChild(op);
+
+    }
+
+    for (let i = 2; i <= 5; i++) {
+
+        let op = document.createElement("option");
+        op.value = i;
+        op.innerHTML = i;
+        document.getElementById("times-select").appendChild(op);
+
+    }
+
+    let onOffTxt = ["OFF", "鳴らす"];
+
+    for (let i = 1; i <= 1; i++) {
+
+        let op = document.createElement("option");
+        op.value = i;
+        op.innerHTML = onOffTxt[i];
+        document.getElementById("onOff-select").appendChild(op);
+
+    }
+
+    for (let i = 1; i < boxNumber; i++) {
+
+        choice[i] = choice[i - 1].cloneNode(true);
+        document.body.appendChild(choice[i]);
+        choice[i].id = "choice" + i;
+    }
+
+    for (let i = 0; i < boxNumber; i++) {
+
+        let m = [3, 5, 8, 10, 15, 20, 25];
+        let tt = [1, 2, 3, 1, 1, 1, 1];
+        let o = [1, 1, 0, 0, 0, 0, 0];
+
+        choiceType[i] = {};
+        choiceType[i].m = choice[i].querySelector("#m-select");
+        choiceType[i].m.id = "m-select" + i;
+        choiceType[i].s = choice[i].querySelector("#s-select");
+        choiceType[i].s.id = "s-select" + i;
+        choiceType[i].times = choice[i].querySelector("#times-select");
+        choiceType[i].times.id = "times-select" + i;
+        choiceType[i].onOff = choice[i].querySelector("#onOff-select");
+        choiceType[i].onOff.id = "onOff-select" + i;
+
+        choiceType[i].opacity = choice[i].querySelector("#opacity");
+        choiceType[i].opacity.id = "opacity_" + i;
+        choiceType[i].opacity2 = choice[i].querySelector("#opacity2");
+        choiceType[i].opacity2.id = "opacity2_" + i;
+
+
+        if (i < m.length) {
+            choiceType[i].m.value = m[i];
+            choiceType[i].s.value = 0;
+            choiceType[i].times.value = tt[i];
+            choiceType[i].onOff.value = o[i];
+
+        } else {
+            choiceType[i].m.value = 30;
+            choiceType[i].s.value = 0;
+            choiceType[i].times.value = 1;
+            choiceType[i].onOff.value = 0;
+
+        }
+
+
+
+    }
+
+
+
+
+
+    let text = document.getElementById("text");
+    text.style.fontSize = "80px"
+
+    let shift = -1;
+    let flag = [];
+
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioContext();
+
+    let bellData;
+    let audio = [];
+
+    loadSound();
+    async function loadSound() {
+
+        const res = await fetch("bellstar.mp3");
+        const aB = await res.arrayBuffer();
+        bellData = await ctx.decodeAudioData(aB);
+
+    }
+    for (let i = 0; i < 5; i++) {
+        audio[i] = null;
+    }
+
+    function soundPlay(index) {
+
+        if (audio[index]) {
+            audio[index].stop();
+            audio[index].disconnect();
+            audio[index] = null;
+        }
+
+        const player = ctx.createBufferSource();
+        const gainNode = ctx.createGain();
+        player.buffer = bellData;
+        gainNode.gain.value = 1;
+
+        player.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        player.start();
+
+        audio[index] = player;
+
+    }
+
+    /*
+        for (let i = 0; i < 5; i++) {
+            audio[i] = new Audio();
+            audio[i].src = "bellstar.mp3";
+        }
+    */
+    let timekeeper = [];
+
+
+    for (let i = 0; i < boxNumber; i++) {
+
+        flag[i] = 1;
+        timekeeper[i] = {};
+
+    }
+
+    document.addEventListener("keydown", pushDown);
+
+    function pushDown(e) {
+
+        if (e.code === "Enter" || e.code === "KeyT" || e.code === "Space" || e.code === "Escape") {
+            e.preventDefault();
+        }
+
+        if (e.code === "Enter" && shift === -1) {
+
+            shift = 1;
+            t = 0;
+            startClock = Date.now();
+
+            for (let i = 0; i < boxNumber; i++) {
+
+
+                timekeeper[i].time = Number(choiceType[i].m.value) * 60 + sSelect[Number(choiceType[i].s.value)];
+                timekeeper[i].ring = Number(choiceType[i].times.value);
+                flag[i] = Number(choiceType[i].onOff.value);
+
+            }
+
+        } else if (e.code === "KeyT" && shift === -1) {
+
+            soundPlay(0);
+
+
+        } else if (e.code === "Space" && shift >= 0) {
+            shift ^= 1;
+
+        } else if (e.code === "Escape" && shift === 0) {
+            shift = -1;
+            t = 0;
+        }
+
+        return false;
+    }
+
+
+
+
+    let t = 0;
+    let startClock = Date.now();
+
+    function d(e) {
+
+        let a = Math.round(e);
+
+        if (a < 10) {
+
+            a = "0" + a;
+
+        } else if (a > 99) {
+            a = "99";
+        }
+
+
+
+        return a;
+
+    }
+
+    function toM() {
+
+        return Math.floor((t / 1000) / 60);
+
+    }
+
+    function toS() {
+
+        return Math.floor(t / 1000) % 60;
+
+    }
+
+    let fps = 60;
+
+    text.innerHTML = d(toM()) + ":" + d(toS()) + ":" + d(t % 100);
+
+
+    setInterval(() => {
+
+
+        if (shift === -1) {
+
+            for (let i = 0; i < boxNumber; i++) {
+
+                if (Number(choiceType[i].onOff.value) === 0) {
+
+                    choiceType[i].m.disabled = true;
+                    choiceType[i].s.disabled = true;
+                    choiceType[i].times.disabled = true;
+
+                } else {
+
+                    choiceType[i].m.disabled = false;
+                    choiceType[i].s.disabled = false;
+                    choiceType[i].times.disabled = false;
+
+
+                }
+                choiceType[i].onOff.disabled = false;
+
+            }
+        } else {
+
+            for (let i = 0; i < boxNumber; i++) {
+
+                choiceType[i].m.disabled = true;
+                choiceType[i].s.disabled = true;
+                choiceType[i].times.disabled = true;
+                choiceType[i].onOff.disabled = true;
+
+            }
+
+        }
+
+        for (let i = 0; i < boxNumber; i++) {
+
+            if (Number(choiceType[i].onOff.value) === 0) {
+
+                choiceType[i].opacity.style.opacity = 0.1;
+
+            } else {
+
+                choiceType[i].opacity.style.opacity = 1;
+
+            }
+        }
+
+        if (shift === 1) {
+
+            navi.innerHTML = "SPACEキーで一時停止";
+
+            t = Date.now() - startClock;
+
+
+
+            for (let i = 0; i < flag.length; i++) {
+                if (flag[i] === 1) {
+
+
+
+                    if (toM() * 60 + toS() >= timekeeper[i].time) {
+
+                        if (timekeeper[i].ring === 1) {
+
+                            soundPlay(0);
+
+                        } else if (timekeeper[i].ring >= 2) {
+
+                            soundPlay(0);
+
+                            let x = [500, 500, 500, 500, 300, 300];
+
+                            for (let j = 1; j < timekeeper[i].ring; j++) {
+
+
+                                setTimeout(() => {
+                                    soundPlay(j);
+                                }, x[timekeeper[i].ring] * j)
+
+                            }
+
+                        }
+
+                        flag[i] = 0;
+
+
+                    }
+
+                }
+
+            }
+
+        } else if (shift === 0) {
+
+            startClock = Date.now() - t;
+
+            navi.innerHTML = "SPACEキーで再開　Escでリセット";
+
+        } else {
+
+            navi.innerHTML = "ベルを設定して、Enterでスタート　Tキーで再生テスト（音が出ます）";
+
+
+
+
+        }
+
+        text.innerHTML = d(toM()) + ":" + d(toS()) + ":" + d(Math.round(t / 10) % 100);
+
+
+
+    }, 1000 / fps)
+
+    document.body.appendChild(document.getElementById("copyRight"));
+    document.getElementById("copyRight").style.lineHeight = "70px";
+
+
+
+</script>

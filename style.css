@@ -1,0 +1,184 @@
+  .flex {
+      float: left;
+  }
+
+  #text {
+      font-size: 5em;
+  }
+
+  #navi {
+      display: block;
+  }
+
+
+  .txt {
+      font-size: 1.3em;
+      /* ←←修正 テキスト内の表示文字サイズ */
+      color: #000000;
+
+      /* 行の高さ */
+  }
+
+  .choice {
+      line-height: 2em;
+      font-size: 1em;
+  }
+
+  .choiceButton {
+      width: 60px;
+      /* ←←修正 横幅 */
+      height: 1.3em;
+      /* 高さ */
+      font-size: 1em;
+      /* ←←修正 テキスト内の表示文字サイズ */
+      color: #000000;
+
+      /* 行の高さ */
+  }
+
+  .choiceButton2 {
+      width: 260px;
+      /* ←←修正 横幅 */
+      height: 1.3em;
+      /* 高さ */
+      font-size: 1em;
+      /* ←←修正 テキスト内の表示文字サイズ */
+      color: #000000;
+
+      /* 行の高さ */
+  }
+
+  #copyRight {
+      line-height: 3em;
+
+      /* 行の高さ */
+  }
+
+  #control {
+
+      gap: 10px;
+
+  }
+
+  .btn {
+
+      width: 120px;
+      height: 1.8em;
+      font-size: 1em;
+      color: #000000;
+      vertical-align: middle;
+      margin-right: 10px;
+      display: none;
+
+
+  }
+
+
+  @media screen and (max-width: 959px) {
+
+      #text {
+          font-size: 5.2em;
+      }
+
+      #navi {
+          display: block;
+      }
+
+      .txt {
+          font-size: 1em;
+      }
+
+      .choice {
+          line-height: 1.7em;
+          font-size: 1em;
+      }
+
+      .choiceButton {
+          width: 40px;
+          height: 1.3em;
+          font-size: 0.9em;
+
+      }
+
+      .choiceButton2 {
+          width: 150px;
+          height: 1.3em;
+          font-size: 0.9em;
+          color: #000000;
+
+      }
+
+      #copyRight {
+          line-height: 2.5em;
+
+          /* 行の高さ */
+      }
+
+      .btn {
+
+          width: 120px;
+          height: 1.8em;
+          font-size: 1em;
+          color: #000000;
+          margin-right: 10px;
+          display: block;
+
+
+      }
+
+
+  }
+
+  @media screen and (max-width: 480px) {
+
+      #text {
+          font-size: 5.5em;
+      }
+
+      #navi {
+          display: none;
+      }
+
+      .txt {
+          font-size: 0.9em;
+      }
+
+      .choice {
+          line-height: 1.4em;
+          font-size: 1em;
+      }
+
+      .choiceButton {
+          width: 45px;
+          height: 1.3em;
+          font-size: 0.8em;
+
+      }
+
+      .choiceButton2 {
+          width: 100px;
+          height: 1.3em;
+          font-size: 0.8em;
+          color: #000000;
+
+      }
+
+      #copyRight {
+          line-height: 2em;
+
+          /* 行の高さ */
+      }
+
+      .btn {
+
+          width: 120px;
+          height: 1.8em;
+          font-size: 1em;
+          color: #000000;
+          margin-right: 10px;
+          display: block;
+
+
+      }
+
+  }

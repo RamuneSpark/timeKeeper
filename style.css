@@ -22,12 +22,14 @@
   .choice {
       line-height: 2em;
       font-size: 1em;
+      margin-bottom: 5px;
+
   }
 
   .choiceButton {
       width: 60px;
       /* ←←修正 横幅 */
-      height: 1.3em;
+      height: 1.6em;
       /* 高さ */
       font-size: 1em;
       /* ←←修正 テキスト内の表示文字サイズ */
@@ -39,7 +41,7 @@
   .choiceButton2 {
       width: 260px;
       /* ←←修正 横幅 */
-      height: 1.3em;
+      height: 1.6em;
       /* 高さ */
       font-size: 1em;
       /* ←←修正 テキスト内の表示文字サイズ */
@@ -91,19 +93,20 @@
       .choice {
           line-height: 1.7em;
           font-size: 1em;
+          margin-bottom: 10px;
       }
 
       .choiceButton {
           width: 40px;
-          height: 1.3em;
-          font-size: 0.9em;
+          height: 1.8em;
+          font-size: 0.95em;
 
       }
 
       .choiceButton2 {
           width: 150px;
-          height: 1.3em;
-          font-size: 0.9em;
+          height: 1.8em;
+          font-size: 0.95em;
           color: #000000;
 
       }
@@ -146,19 +149,20 @@
       .choice {
           line-height: 1.4em;
           font-size: 1em;
+          margin-bottom: 20px;
       }
 
       .choiceButton {
           width: 45px;
-          height: 1.3em;
-          font-size: 0.8em;
+          height: 2em;
+          font-size: 0.9em;
 
       }
 
       .choiceButton2 {
           width: 100px;
-          height: 1.3em;
-          font-size: 0.8em;
+          height: 2em;
+          font-size: 0.9em;
           color: #000000;
 
       }
